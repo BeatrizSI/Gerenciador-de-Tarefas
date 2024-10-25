@@ -20,7 +20,20 @@ function Home() {
       tarefa: inputTarefa.current.value,
       data: new Date(inputData.current.value).toISOString() // Formata a data corretamente
     });
+
+    //definindo os valores dos campos de entrada como vazios para.
+    // Limpar os inputs após adicionar a tarefa
+    inputTarefa.current.value = '';
+    inputData.current.value = '';
+
     getTasks(); // Atualiza a lista após criar uma nova tarefa
+  }
+
+  // Função para deletar uma tarefa
+  async function deleteTasks(id) {
+    await api.delete(`/tarefas/${id}`)
+
+    getTasks();
   }
 
   // Efeito para buscar tarefas ao montar o componente
@@ -34,7 +47,7 @@ function Home() {
         <h1>Gerenciador de Tarefas</h1>
         <input placeholder="Tarefa" name="tarefa" type="text" ref={inputTarefa} required />
         <input placeholder="Data" name="data" type="date" ref={inputData} required />
-        <button type="submit">Criar</button>
+        <button type="submit">Salvar</button>
       </form>
 
       {tasks.map((task) => (
@@ -43,7 +56,7 @@ function Home() {
             <p>Tarefa: <span>{task.tarefa}</span></p>
             <p>Data: <span>{new Date(task.data).toLocaleDateString()}</span></p>
           </div>
-          <button>
+          <button onClick={() => deleteTasks(task.id)}>
             <img src={Trash} alt="Deletar" />
           </button>
         </div>
