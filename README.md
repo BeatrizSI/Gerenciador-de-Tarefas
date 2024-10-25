@@ -1,7 +1,9 @@
 # Aplicação fullstack - Gerenciador de Tarefas
 
 Este é um projeto de um gerenciador de tarefas desenvolvido em Node.js com Express no backend e React no frontend. 
-O objetivo é permitir que os usuários criem, visualizem e excluam tarefas, além de adicionar a data da criação da tarefa.
+<p> O objetivo é permitir que os usuários criem, visualizem e excluam tarefas, além de adicionar a data da criação da tarefa.
+
+![Tela do Gerenciador de Tarefas](frontend/gerenciador-tarefas/src/assets/tela-app.png)
 
 ## Tecnologias Usadas
 
