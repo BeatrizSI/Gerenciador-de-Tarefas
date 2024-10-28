@@ -21,8 +21,8 @@ function Home() {
       data: new Date(inputData.current.value).toISOString() // Formata a data corretamente
     });
 
-    //definindo os valores dos campos de entrada como vazios para.
-    // Limpar os inputs após adicionar a tarefa
+    //definindo os valores dos campos de entrada como vazios para...
+    // limpar os inputs após adicionar a tarefa
     inputTarefa.current.value = '';
     inputData.current.value = '';
 
