@@ -46,7 +46,7 @@ cd nome-do-repositorio
   ## 2.1 Navegue até a pasta do backend: cd backend
   ## 2.2 Instale as dependências: npm install
   ## 2.3  Crie um arquivo .env na pasta do backend e adicione a URL de conexão do MongoDB: DATABASE_URL="sua_conexao_do_mongodb"
-  ## 2.4 Inicie o servidor: npm start
+  ## 2.4 Inicie o servidor: node --watch server.js
 
 ## 3. Configuração do Frontend
   ## 3.1 Navegue até a pasta do frontend: cd frontend
