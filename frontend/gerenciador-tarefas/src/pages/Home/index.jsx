@@ -4,65 +4,66 @@ import api from "../../services/api";
 import { useEffect, useState, useRef } from "react";
 
 function Home() {
-  const [tasks, setTasks] = useState([]);
-  const inputTarefa = useRef();
-  const inputData = useRef();
+    const [tasks, setTasks] = useState([]);
+    const inputTarefa = useRef();
+    const inputData = useRef();
 
-  // Função para buscar tarefas do backend
-  async function getTasks() {
-    const tasksFromApi = await api.get('/tarefas');
-    setTasks(tasksFromApi.data);
-  }
+    // Função para buscar tarefas do backend
+    async function getTasks() {
+        const tasksFromApi = await api.get('/tarefas');
+        setTasks(tasksFromApi.data);
+    }
 
-  // Função para criar uma nova tarefa
-  async function createTasks() {
-    await api.post('/tarefas', {
-      tarefa: inputTarefa.current.value,
-      data: new Date(inputData.current.value).toISOString() // Formata a data corretamente
-    });
+    // Função para criar uma nova tarefa
+    async function createTasks() {
+        const tarefaValue = inputTarefa.current.value;
+        const dataValue = inputData.current.value;
 
-    //definindo os valores dos campos de entrada como vazios para...
-    // limpar os inputs após adicionar a tarefa
-    inputTarefa.current.value = '';
-    inputData.current.value = '';
+        await api.post('/tarefas', {
+            tarefa: tarefaValue,
+            data: dataValue // Envia a data diretamente
+        });
 
-    getTasks(); // Atualiza a lista após criar uma nova tarefa
-  }
+        // Limpa os campos após adicionar a tarefa
+        inputTarefa.current.value = '';
+        inputData.current.value = '';
 
-  // Função para deletar uma tarefa
-  async function deleteTasks(id) {
-    await api.delete(`/tarefas/${id}`)
+        getTasks(); // Atualiza a lista após criar uma nova tarefa
+    }
 
-    getTasks();
-  }
+    // Função para deletar uma tarefa
+    async function deleteTasks(id) {
+        await api.delete(`/tarefas/${id}`);
+        getTasks();
+    }
 
-  // Efeito para buscar tarefas ao montar o componente
-  useEffect(() => {
-    getTasks();
-  }, []);
+    // Efeito para buscar tarefas ao montar o componente
+    useEffect(() => {
+        getTasks();
+    }, []);
 
-  return (
-    <div className="container">
-      <form onSubmit={(e) => { e.preventDefault(); createTasks(); }}>
-        <h1>Gerenciador de Tarefas</h1>
-        <input placeholder="Tarefa" name="tarefa" type="text" ref={inputTarefa} required />
-        <input placeholder="Data" name="data" type="date" ref={inputData} required />
-        <button type="submit">Salvar</button>
-      </form>
+    return (
+        <div className="container">
+            <form onSubmit={(e) => { e.preventDefault(); createTasks(); }}>
+                <h1>Gerenciador de Tarefas</h1>
+                <input placeholder="Tarefa" name="tarefa" type="text" ref={inputTarefa} required />
+                <input placeholder="Data" name="data" type="date" ref={inputData} required />
+                <button type="submit">Salvar</button>
+            </form>
 
-      {tasks.map((task) => (
-        <div key={task.id} className="card">
-          <div>
-            <p>Tarefa: <span>{task.tarefa}</span></p>
-            <p>Data: <span>{new Date(task.data).toLocaleDateString()}</span></p>
-          </div>
-          <button onClick={() => deleteTasks(task.id)}>
-            <img src={Trash} alt="Deletar" />
-          </button>
+            {tasks.map((task) => (
+                <div key={task.id} className="card">
+                    <div>
+                        <p>Tarefa: <span>{task.tarefa}</span></p>
+                        <p>Data: <span>{new Date(task.data).toLocaleDateString('pt-BR')}</span></p> {/* Exibe a data formatada */}
+                    </div>
+                    <button onClick={() => deleteTasks(task.id)}>
+                        <img src={Trash} alt="Deletar" />
+                    </button>
+                </div>
+            ))}
         </div>
-      ))}
-    </div>
-  );
+    );
 }
 
 export default Home;
